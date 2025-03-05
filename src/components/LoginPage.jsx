@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "./firebase"; // Import Firebase auth and Firestore
+import { doc, getDoc } from "firebase/firestore"; // For fetching user roles
 import { useNavigate } from "react-router-dom"; // For navigation
 
 const LoginPage = () => {
@@ -7,15 +10,36 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    
-    // Dummy authentication check
-    if (email === "admin@wash.com" && password === "admin123") {
-      alert("Login successful! Redirecting...");
-      navigate("/dashboard"); // Redirect to dashboard
-    } else {
-      setError("Invalid email or password");
+    setError("");
+
+    try {
+      // Sign in with Firebase
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Fetch user role from Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userRole = userDoc.data().role;
+
+        // Redirect based on role
+        if (userRole === "admin") {
+          alert("Admin login successful! Redirecting to dashboard...");
+          navigate("/dashboard"); // Redirect to admin dashboard
+        } else if (userRole === "customer") {
+          alert("Customer login successful! Redirecting to your personal page...");
+          navigate("/booking"); // Redirect to customer personal page
+        } else {
+          setError("Invalid user role.");
+        }
+      } else {
+        setError("User role not found.");
+      }
+    } catch (err) {
+      setError(err.message);
+      alert("Login failed. Please check your email and password.");
     }
   };
 
@@ -34,20 +58,20 @@ const LoginPage = () => {
         {/* Left side: Image and Text */}
         <div className="flex-1 p-8 hidden lg:block">
           <img
-            src="/pusa.jpeg" // Replace with your shop image
+            src="src/assets/pusa.jpeg" // Replace with your shop image
             alt="Laundry Shop"
             className="w-[80%] h-[40vh] object-cover rounded-lg shadow-xl transition-all duration-300 hover:scale-105"
           />
           <div className="mt-6 text-center">
             <h2 className="text-3xl font-bold text-pink-500">Welcome to Wash It Izzy!</h2>
-            <p className="text-gray-700 mt-3">Your trusted laundry service. Admin login to manage orders and services.</p>
+            <p className="text-gray-700 mt-3">Your trusted laundry service. Login to manage orders and services.</p>
           </div>
         </div>
 
         {/* Right side: Login Form */}
         <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-2xl">
-          <h2 className="text-3xl font-bold text-center text-pink-500 mb-4">Admin Login</h2>
-          <p className="text-center text-red-500 font-semibold mb-6">For Admins and Owners Only</p>
+          <h2 className="text-3xl font-bold text-center text-pink-500 mb-4">Login</h2>
+          <p className="text-center text-red-500 font-semibold mb-6">For Admins and Customers</p>
 
           <form className="mt-4 space-y-6" onSubmit={handleLogin}>
             <div>
@@ -70,7 +94,7 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{"Log in Failed "}</p>}
             <div>
               <button
                 type="submit"
@@ -82,6 +106,10 @@ const LoginPage = () => {
           </form>
         </div>
       </div>
+   
+    
+    
+
 
       {/* Footer */}
       <footer id="contact" className="bg-gray-900 text-white py-12 mt-16">
