@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth, db } from "./firebase"; // Import Firebase auth and Firestore
 import { doc, getDoc } from "firebase/firestore"; // For fetching user roles
 import { useNavigate } from "react-router-dom"; // For navigation
@@ -18,6 +18,13 @@ const LoginPage = () => {
       // Sign in with Firebase
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+
+      // Check if email is verified
+      if (!user.emailVerified) {
+        alert("Please verify your email before logging in.");
+        await sendEmailVerification(user); // Resend verification email
+        return;
+      }
 
       // Fetch user role from Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -69,47 +76,50 @@ const LoginPage = () => {
         </div>
 
         {/* Right side: Login Form */}
-        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-2xl">
-          <h2 className="text-3xl font-bold text-center text-pink-500 mb-4">Login</h2>
-          <p className="text-center text-red-500 font-semibold mb-6">For Admins and Customers</p>
+        <div className="w-full max-w-md bg-white p-7 rounded-xl shadow-2xl border-2 border-pink-400">
+  <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-pink-500 to-pink-300 bg-clip-text text-transparent">
+    Wash It Izzy
+  </h2>
+  <p className="text-center text-gray-500 font-semibold mb-6">Laundry shop</p>
 
-          <form className="mt-4 space-y-6" onSubmit={handleLogin}>
-            <div>
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-pink-500 transition-all"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                placeholder="Password"
-                className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-pink-500 transition-all"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            {error && <p className="text-red-500 text-sm">{"Log in Failed "}</p>}
-            <div>
-              <button
-                type="submit"
-                className="w-full bg-pink-500 text-white p-3 rounded-md hover:bg-pink-600 transition-all"
-              >
-                Login
-              </button>
-            </div>
-          </form>
-        </div>
+  <form className="mt-4 space-y-4" onSubmit={handleLogin}>
+    <div>
+      <label className="text-gray-600">Email</label>
+      <input
+        type="email"
+        placeholder="example@gmail.com"
+        className="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-500 transition-all"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+    </div>
+    <div>
+      <label className="text-gray-600">Password</label>
+      <input
+        type="password"
+        placeholder="Enter password"
+        className="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-pink-500 transition-all"
+        required
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+    </div>
+    <div className="flex justify-end text-sm">
+      <a href="#" className="text-gray-500 hover:underline">Forgot password?</a>
+    </div>
+    {error && <p className="text-red-500 text-sm">Log in Failed</p>}
+    <div>
+      <button
+        type="submit"
+        className="w-full bg-gradient-to-r from-pink-500 to-pink-300 text-black p-3 rounded-full hover:opacity-90 transition-all"
+      >
+        Login
+      </button>
+    </div>
+  </form>
+</div>
       </div>
-   
-    
-    
-
 
       {/* Footer */}
       <footer id="contact" className="bg-gray-900 text-white py-12 mt-16">
