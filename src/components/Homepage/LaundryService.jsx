@@ -1,6 +1,6 @@
 export default function LaundryService() {
   return (
-    <div className="flex flex-col items-center text-center py-12 px-6 bg-white min-h-screen">
+    <div id="service" className="flex flex-col items-center text-center py-12 px-6 bg-white min-h-screen">
       <h2 className="text-3xl font-bold text-gray-900">How Our Laundry Service Works</h2>
       <p className="text-gray-600 max-w-2xl mt-2">
         Having fresh, neatly folded laundry delivered right to your doorstep is as simple as 1-2-3!

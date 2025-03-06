@@ -36,16 +36,15 @@ const handleEmailSignUp = async (e) => {
   }
 
   try {
+    // Check if the email is already registered
+    const userRef = doc(db, "users", email); // Check by email
+    const userDoc = await getDoc(userRef);
 
-     // Check if the email is already registered
-     const userRef = doc(db, "users", email); // Use email as the document ID
-     const userDoc = await getDoc(userRef);
-
-     if (userDoc.exists()) {
-       alert("This email is already registered. Redirecting to login...");
-       navigate("/login");
-       return;
-     }
+    if (userDoc.exists()) {
+      alert("This email is already registered. Redirecting to login...");
+      navigate("/login");
+      return;
+    }
 
     // Create user with email and password
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -56,7 +55,7 @@ const handleEmailSignUp = async (e) => {
     alert("A verification email has been sent. Please check your inbox.");
 
     // Store user data in Firestore using UID as the document ID
-    await setDoc(doc(db, "users", user.uid), {
+    await setDoc(doc(db, "users", user.uid), { // Use UID as the document ID
       firstName,
       lastName,
       contact,
@@ -142,8 +141,8 @@ const handleEmailSignUp = async (e) => {
     <>
      {/* Main Sign-Up Modal */}
 {showSignUpModal && !showEmailForm && (
-  <div className="fixed inset-0 bg-transparent backdrop-blur-sm flex justify-center items-center z-50">
-    <div className="bg-white p-6 rounded-xl shadow-xl w-96 text-center">
+  <div className="fixed inset-0 bg-transparent backdrop-blur-sm flex justify-center items-center z-50 ">
+    <div className="bg-white p-6 rounded-xl shadow-xl w-96 text-center border-2 border-pink-400 ">
       <h2 className="text-xl font-bold mb-4">Sign Up</h2>
       <button
         onClick={handleGoogleSignUp}
@@ -188,7 +187,7 @@ const handleEmailSignUp = async (e) => {
       {/* Email Sign-Up Modal */}
       {showEmailForm && (
         <div className="fixed inset-0 bg-transparent backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96 border-2 border-pink-400">
             <h2 className="text-lg font-bold mb-4">Sign Up with Email</h2>
             <form onSubmit={handleEmailSignUp}>
               <input type="text" name="firstName" placeholder="First Name" className="w-full border rounded-md p-2 mb-3" onChange={handleChange} />

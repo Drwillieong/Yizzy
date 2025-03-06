@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "./firebase"; // Import Firebase auth and Firestore
 import { doc, getDoc } from "firebase/firestore"; // For fetching user roles
 import { useNavigate } from "react-router-dom"; // For navigation
@@ -18,13 +18,6 @@ const LoginPage = () => {
       // Sign in with Firebase
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
-      // Check if email is verified
-      if (!user.emailVerified) {
-        alert("Please verify your email before logging in.");
-        await sendEmailVerification(user); // Resend verification email
-        return;
-      }
 
       // Fetch user role from Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -45,8 +38,8 @@ const LoginPage = () => {
         setError("User role not found.");
       }
     } catch (err) {
-      setError(err.message);
-      alert("Login failed. Please check your email and password.");
+      setError(`Login failed: ${err.message}`);
+      console.error("Login error:", err);
     }
   };
 
@@ -65,7 +58,7 @@ const LoginPage = () => {
         {/* Left side: Image and Text */}
         <div className="flex-1 p-8 hidden lg:block">
           <img
-            src="src/assets/pusa.jpeg" // Replace with your shop image
+            src="\src\assets\pusa.jpeg" // Replace with your shop image
             alt="Laundry Shop"
             className="w-[80%] h-[40vh] object-cover rounded-lg shadow-xl transition-all duration-300 hover:scale-105"
           />
