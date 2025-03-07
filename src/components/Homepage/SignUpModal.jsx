@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase'; // Adjust the import according to your firebase setup
 import { createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import facebookpng from "/src/assets/facebook.png";
+import googlepng from "/src/assets/goggle.png"; // (Also check spelling: 'google'?)
+
 
 const SignUpModal = ({ showSignUpModal, setShowSignUpModal }) => {
   const navigate = useNavigate();
@@ -148,14 +151,14 @@ const handleEmailSignUp = async (e) => {
         onClick={handleGoogleSignUp}
         className="w-full border py-2 rounded-md flex items-center justify-center mb-3 hover:bg-gray-100 transition"
       >
-        <img src="src\assets\icons8-google-48.png" alt="Google" className="w-5 h-5 mr-2" />
+        <img src={googlepng} alt="Google" className="w-5 h-5 mr-2" />
         Sign up with Google
       </button>
       <button
         onClick={handleFacebookSignUp}
         className="w-full bg-[#1877F2] text-white py-2 rounded-md flex items-center justify-center mb-3 hover:bg-[#165db6] transition"
       >
-        <img src="src\assets\icons8-facebook-48.png" alt="Facebook" className="w-5 h-5 mr-2" />
+        <img src={facebookpng} alt="Facebook" className="w-5 h-5 mr-2" />
         Sign up with Facebook
       </button>
       <button

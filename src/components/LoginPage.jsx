@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "./firebase"; // Import Firebase auth and Firestore
 import { doc, getDoc } from "firebase/firestore"; // For fetching user roles
 import { useNavigate } from "react-router-dom"; // For navigation
+import pusa from "../assets/pusa.jpeg";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -58,7 +59,7 @@ const LoginPage = () => {
         {/* Left side: Image and Text */}
         <div className="flex-1 p-8 hidden lg:block">
           <img
-            src="\src\assets\pusa.jpeg" // Replace with your shop image
+            src={pusa} // Replace with your shop image
             alt="Laundry Shop"
             className="w-[80%] h-[40vh] object-cover rounded-lg shadow-xl transition-all duration-300 hover:scale-105"
           />

@@ -1,17 +1,20 @@
 import { useState } from "react";
+import wash from "/src/assets/wash.png";
+import dry from "/src/assets/Dry.png";
+import Selfservice from "/src/assets/Selfservice.png";
 
 const services = {
   "Wash & Fold": {
     title: "Wash & Fold",
     description:
       "If you're tired of laundry, our Wash & Fold service is ideal. We'll pick up your clothes, wash them according to your preferences in individual machines, fold them neatly, including matching your socks, and return them to you.Enjoy clean, folded laundry delivered to your door. We take care of the washing, so you can focus on what matters.",
-    image: "/src/assets/Servicesections/wash.png",
+    image: wash,
   },
   "Dry Cleaning": {
     title: "Dry Cleaning",
     description:
       "Get your delicate items professionally cleaned, pressed, and hung, all without leaving home. We handle dry cleaning and laundering for a crisp, ready-to-wear finish.Experience top-tier cleaning delivered to your door. We'll expertly clean and press your garments, returning them on hangers, saving you trips to the dry cleaners.",
-    image: "/src/assets/Servicesections/Dry.png",
+    image: dry,
   },
   "Other Services": {
     title: "Self Service",
@@ -19,7 +22,7 @@ const services = {
     
     description:
       "Discover the freedom of affordable and flexible laundry at our self-service location! We offer a range of easy-to-operate, high-efficiency machines at prices that won't strain your wallet. Customize your wash with your preferred detergents and fabric softeners, and tackle your laundry on your own schedule. Experience laundry done exactly to your liking, without the hefty price tag.",
-    image: "/src/assets/Servicesections/Selfservice.png",
+    image: Selfservice,
   },
 };
 

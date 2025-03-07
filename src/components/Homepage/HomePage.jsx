@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import AboutService from "./AboutService"; // Import LaundryService
 import LaundryService from "./LaundryService"; // Import LaundrySection
-
+import backgroundImage from "/src/assets/loundry BG.webp";
 import SignUpModal from "./SignUpModal";
 
 const HomePage = () => {
@@ -27,7 +27,7 @@ const HomePage = () => {
      
      
       {/* Hero Section */}
-      <div id="" className="relative text-left py-35 px-10 bg-cover bg-center flex items-center" style={{ backgroundImage: "url('src/assets/loundry BG.webp')" }}>
+      <div id="" className="relative text-left py-35 px-10 bg-cover bg-center flex items-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
         <div className="max-w-3xl">
           <h1 className="text-6xl font-extrabold italic text-white">EVERY LAUNDRY MAKES A DIFFERENCE</h1>
           <p className="mt-4 text-lg text-white">We offer drop-off, self-service, pick-up & delivery, and dry-cleaning services to make laundry day Izzy-ier for you.</p>
