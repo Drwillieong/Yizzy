@@ -4,6 +4,7 @@ import AboutService from "./AboutService"; // Import LaundryService
 import LaundryService from "./LaundryService"; // Import LaundrySection
 import backgroundImage from "/src/assets/loundry BG.webp";
 import SignUpModal from "./SignUpModal";
+import AboutOurFees from "./AboutOurFees";
 
 const HomePage = () => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -56,6 +57,8 @@ const HomePage = () => {
       {/* Laundry Service and Sections */}
       <LaundryService />
       <AboutService />
+      <AboutOurFees />
+
 
       {/* Footer */}
       <footer id="contact" className="bg-gray-900 text-white py-12 mt-10">

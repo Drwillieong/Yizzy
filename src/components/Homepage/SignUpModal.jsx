@@ -4,7 +4,7 @@ import { auth, db } from '../firebase'; // Adjust the import according to your f
 import { createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import facebookpng from "/src/assets/facebook.png";
-import googlepng from "/src/assets/goggle.png"; // (Also check spelling: 'google'?)
+import googlepng from "/src/assets/goggle.png"; 
 
 
 const SignUpModal = ({ showSignUpModal, setShowSignUpModal }) => {
@@ -202,9 +202,9 @@ const handleEmailSignUp = async (e) => {
                 <input type="checkbox" name="agreeToTerms" className="mr-2" onChange={handleChange} />
                 I agree to the <span className="text-blue-500 cursor-pointer ml-1">Terms & Privacy Policy</span>
               </label>
-              <button type="submit" className="w-full bg-orange-500 text-white py-2 rounded-md font-semibold">Sign Up</button>
+              <button type="submit" className="w-full  from-pink-500 to-pink-300  text-white py-2 rounded-md font-semibold">Sign Up</button>
             </form>
-            <button onClick={() => setShowEmailForm(false)} className="mt-3 text-gray-500">Back</button>
+            <button onClick={() => setShowEmailForm(false)} className="mt-3 text-black font-medium">Back</button>
           </div>
         </div>
       )}
